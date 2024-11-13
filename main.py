@@ -12,19 +12,22 @@ def insert_event_to_bigquery(event_type):
     rows_to_insert = [{
         "event_id": str(uuid.uuid4()),
         "event_type": event_type,
-        "event_timestamp": datetime.datetime.now()
+        "event_timestamp": datetime.datetime.now().isoformat()  # Converte datetime para string
     }]
     errors = client.insert_rows_json(table_id, rows_to_insert)
     if errors:
         raise RuntimeError(f"Erro ao inserir dados: {errors}")
 
-@app.route("/event", methods=["POST"])
+@app.route("/events", methods=["GET"])  # Alterei para GET, pois o parâmetro está na URL
 def event():
-    data = request.get_json()
-    event_type = data.get("event_type", "default_event")
+    event_type = request.args.get("event_type", "default_event")  # Pega o parâmetro da URL
     try:
         insert_event_to_bigquery(event_type)
-        return jsonify({"status": "success"}), 200
+        response = {
+            "status": "success",
+            "timestamp": datetime.datetime.now().isoformat()  # Converte datetime para string
+        }
+        return jsonify(response), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
