@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Função para inserir dados no BigQuery
 def insert_event_to_bigquery(event_type):
     client = bigquery.Client()
-    table_id = "useful-song-441516-t4.lab_dataset.events"  # Substitua com seu projeto e dataset
+    table_id = "project__id.lab_dataset.events"  # Substitua com seu projeto e dataset
     rows_to_insert = [{
         "event_id": str(uuid.uuid4()),
         "event_type": event_type,
