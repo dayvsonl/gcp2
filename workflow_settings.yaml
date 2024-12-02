@@ -1,5 +1,5 @@
 defaultProject: useful-song-441516-t4
-defaultLocation: us-EAST1
+defaultLocation: US-SOUTH1
 defaultDataset: lab1
 defaultAssertionDataset: dataform_assertions
 dataformCoreVersion: 3.0.0
